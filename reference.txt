@@ -1,0 +1,2 @@
+Plant species database field reference
+http://naturalhistory.si.edu/ete/ETE_Database_Manual_PlantSpeciesDataFields.html
