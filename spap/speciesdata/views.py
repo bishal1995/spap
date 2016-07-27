@@ -1,3 +1,10 @@
-from django.shortcuts import render
+from django.conf.urls import url
+import views
 
-# Create your views here.
+urlpatterns = [
+
+	# All order details	
+    url(r'^plantae/$', views.RegPlantaeAPI.as_view() ),
+
+]
+

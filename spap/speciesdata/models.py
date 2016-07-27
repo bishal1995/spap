@@ -117,7 +117,7 @@ SPC = (
 )
 # Main species data - In English
 class Plantae(models.Model):
-	plant = models.AutoField(primary_key=True,db_index=True)
+	plantae = models.AutoField(primary_key=True,db_index=True)
 	scientific_name = models.CharField(max_length=40)
 	local_name = models.CharField(max_length=40)
 	apd = models.CharField(max_length=4,choices=APD)
