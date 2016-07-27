@@ -144,7 +144,7 @@ class Plantae(models.Model):
 	pollen_vector = models.CharField(max_length=2,choices=PVR)
 	predation = models.BinaryField()
 	seed_dispersal = models.CharField(max_length=2,choices=SDR)
-	seeds_diaspore models.PositiveSmallIntegerField()
+	seeds_diaspore = models.PositiveSmallIntegerField()
 	seed_size_class = models.PositiveSmallIntegerField()
 	sporophyte_cost = models.CharField(max_length=2,choices=SPC)
 	status = models.BinaryField()

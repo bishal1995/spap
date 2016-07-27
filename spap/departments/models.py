@@ -7,23 +7,26 @@ class Division(models.Model):
 	state = models.CharField(max_length=30)
 	district = models.CharField(max_length=30)
 	division_name = models.CharField(max_length=40)
-	gisArea = models.ForeignKey('')
+	gisArea = models.ForeignKey('gisdata.gisArea',null=True)
+	is_active = models.BinaryField(default=True)
 
 class Range(models.Model):
 	ranges = models.AutoField(primary_key=True,db_index=True)
 	state = models.CharField(max_length=30)
 	district = models.CharField(max_length=30)
-	rangename = models.CharField(max_length=30)
+	range_name = models.CharField(max_length=30)
 	division = models.ForeignKey(Division)
-	gisArea = models.ForeignKey('')
+	gisArea = models.ForeignKey('gisdata.gisArea',null=True)
+	is_active = models.BinaryField(default=True)
 
 class Beat(models.Model):
-	best = models.AutoField(primary_key=True,db_index=True)
+	beat = models.AutoField(primary_key=True,db_index=True)
 	state = models.CharField(max_length=30)
 	district = models.CharField(max_length=30)
-	beatname = models.CharField(max_length=30)
+	beat_name = models.CharField(max_length=30)
 	ranges = models.ForeignKey(Range)
 	division = models.ForeignKey(Division)
-	gisArea = models.ForeignKey('') # from gis data
+	gisArea = models.ForeignKey('gisdata.gisArea',null=True) # from gis data
+	is_active = models.BinaryField(default=True)
 
 	

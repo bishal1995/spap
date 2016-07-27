@@ -51,7 +51,7 @@ class SeedCollection(models.Model):
 	colltoU = models.CharField(max_length=2,choices=TTO) # User type
 	collfromU_id = models.PositiveIntegerField() # User ID
 	colltoU_id = models.PositiveIntegerField() # User ID
-	plant = models.ForeignKey('') # registered plant
+	plant = models.ForeignKey('regspecies.RegPlantae') # registered plant
 	coll_amount = models.PositiveSmallIntegerField()
 	date = models.DateField(auto_now_add=False)
 	time = models.TimeField(auto_now_add=False)
@@ -67,7 +67,7 @@ class SeedDistribution(models.Model):
 	distoU = models.CharField(max_length=2,choices=TTO) # User type
 	disfromU_id = models.PositiveIntegerField() # User ID
 	distoU_id = models.PositiveIntegerField() # User ID
-	plant = models.ForeignKey('')    # registered plant
+	plant = models.ForeignKey('regspecies.RegPlantae')    # registered plant
 	dis_amount = models.PositiveSmallIntegerField()
 	date = models.DateField(auto_now_add=False)
 	time = models.TimeField(auto_now_add=False)
@@ -78,10 +78,10 @@ class SeedDistribution(models.Model):
 class Transaction(models.Model):
 	seedtransaction =  models.AutoField(primary_key=True,db_index=True)
 	trantype = models.CharField(max_length=2,choices=TRT) # Transaction Type
-	tran_id = models.IntField() # either a collection or distribution ID
+	tran_id = models.PositiveIntegerField() # either a collection or distribution ID
 	trangood = models.CharField(max_length=2,choices=TRG) # Transaction good
 	regbeing_type = models.CharField(max_length=2,choices=RBT)
-	regbeing_id = models.ForeignKey('')  # registered species
+	regbeing_id = models.PositiveIntegerField()  # registered species
 	tranfromg = models.CharField(max_length=2,choices=TFB) # group type
 	trantog = models.CharField(max_length=2,choices=TTB) # group type
 	tranfromg_id = models.PositiveIntegerField() # group ID
@@ -91,8 +91,8 @@ class Transaction(models.Model):
 	tranfromU_id = models.PositiveIntegerField() # User ID
 	trantoU_id = models.PositiveIntegerField() # User ID
 	transaction_amount = models.PositiveSmallIntegerField()
-	bal_dec_from = models.ForeignKey('')
-	bal_add_to = models.ForeignKey('')
+	bal_dec_from = models.ForeignKey('resourcebank.ResourceDeposit',related_name='from+')
+	bal_add_to = models.ForeignKey('resourcebank.ResourceDeposit',related_name='to+')
 	date = models.DateField(auto_now_add=False)
 	time = models.TimeField(auto_now_add=False)
 

@@ -7,23 +7,23 @@ class DivisionOfficer(models.Model):
 	divisionofficer = models.AutoField(primary_key=True,db_index=True)
 	user = models.OneToOneField(User)
 	officialID = models.CharField(max_length=20)
-	division = models.ForeignKey('')
+	division = models.ForeignKey('departments.Division')
 
 
 class RangeOfficer(models.Model):
 	rangeofficer = models.AutoField(primary_key=True,db_index=True)
 	user = models.OneToOneField(User)
 	officialID = models.CharField(max_length=20)
-	division = models.ForeignKey('')
-	ranged = models.ForeignKey('')
+	division = models.ForeignKey('departments.Division')
+	ranged = models.ForeignKey('departments.Range')
 
 class BeatOfficer(models.Model):
 	beatofficer = models.AutoField(primary_key=True,db_index=True)
 	user = models.OneToOneField(User)
 	officialID = models.CharField(max_length=20)
-	division = models.ForeignKey('')
-	ranged = models.ForeignKey('')
-	beat = models.ForeignKey('')
+	division = models.ForeignKey('departments.Division')
+	ranged = models.ForeignKey('departments.Range')
+	beat = models.ForeignKey('departments.Beat')
 
 
 

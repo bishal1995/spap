@@ -37,7 +37,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework.authtoken',
+    'rest_framework',
+    'corsheaders',
+    'datafiles.apps.DatafilesConfig',
+    'departments.apps.DepartmentsConfig',
+    'gisdata.apps.GisdataConfig',
+    'media.apps.MediaConfig',
+    'regspecies.apps.RegspeciesConfig',
+    'resourcebank.apps.ResourcebankConfig',
+    'resourcetransaction.apps.ResourcetransactionConfig',
+    'speciesdata.apps.SpeciesdataConfig',
+    'users.apps.UsersConfig',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -80,7 +90,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME' : 'spap',
         'USER' : 'root',
-        'PASSWORD' : 'DT8X022',
+        'PASSWORD' : 'Paul@1995',
 
     }
 }
@@ -88,7 +98,7 @@ DATABASES = {
 REST_FRAMEWORK = {
     'DEFAULT_THROTTLE_RATES': {
         'anon': '1000/day',
-        'user': '100/day'
+        'user': '1000/day'
     },
 }
 
@@ -124,6 +134,12 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+# Media files
+#media
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+
 
 
 # Static files (CSS, JavaScript, Images)
