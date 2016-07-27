@@ -10,8 +10,8 @@ class gisArea(models.Model):
 
 class cordinates(models.Model):
 	area = models.OneToOneField(gisArea,primary_key=True,db_index=True)
-	latitude = models.DecimalField(max_digits=9, decimal_places=2)
-	longitude = models.DecimalField(max_digits=9, decimal_places=2)
+	latitude = models.DecimalField(max_digits=8, decimal_places=6)
+	longitude = models.DecimalField(max_digits=8, decimal_places=6)
 
 
 
