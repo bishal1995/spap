@@ -76,7 +76,7 @@ class SeedDistribution(models.Model):
 
 # Transactions to be dove after updating the collection,distribution and balance
 class Transaction(models.Model):
-	seedtransaction =  models.AutoField(primary_key=True,db_index=True)
+	transaction =  models.AutoField(primary_key=True,db_index=True)
 	trantype = models.CharField(max_length=2,choices=TRT) # Transaction Type
 	tran_id = models.PositiveIntegerField() # either a collection or distribution ID
 	trangood = models.CharField(max_length=2,choices=TRG) # Transaction good

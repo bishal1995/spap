@@ -18,7 +18,7 @@ DBT = (
 )
 
 class SeedDeposit(models.Model):
-	bank = models.AutoField(primary_key=True,db_index=True)
+	account = models.AutoField(primary_key=True,db_index=True)
 	state = models.CharField(max_length=30) 
 	district = models.CharField(max_length=30)
 	body_type = models.CharField(max_length=2,choices=DBT) # Owner type
@@ -32,7 +32,7 @@ class SeedDeposit(models.Model):
 
 
 class ResourceDeposit(models.Model):
-	resourcebank = models.AutoField(primary_key=True,db_index=True)
+	account = models.AutoField(primary_key=True,db_index=True)
 	state = models.CharField(max_length=30) 
 	district = models.CharField(max_length=30)
 	body_type = models.CharField(max_length=2,choices=DBT) # Owner type
