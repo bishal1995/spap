@@ -128,7 +128,6 @@ class Plantae(models.Model):
 	Family = models.CharField(max_length=30)
 	Genus = models.CharField(max_length=30)
 	Species = models.CharField(max_length=30)
-	clonal_growth = models.NullBooleanField()
 	distribution = models.CharField(max_length=2,choices=DST)
 	evapotranspiration = models.CharField(max_length=2,choices=EVT)
 	leaf_dissection = models.CharField(max_length=2,choices=LDS)
@@ -142,12 +141,11 @@ class Plantae(models.Model):
 	pollen_size = models.DecimalField(max_digits=7, decimal_places=2)
 	pollen_surface = models.CharField(max_length=2,choices=PSF)
 	pollen_vector = models.CharField(max_length=2,choices=PVR)
-	predation = models.BinaryField()
 	seed_dispersal = models.CharField(max_length=2,choices=SDR)
 	seeds_diaspore = models.PositiveSmallIntegerField()
 	seed_size_class = models.PositiveSmallIntegerField()
 	sporophyte_cost = models.CharField(max_length=2,choices=SPC)
-	status = models.BinaryField()
+	status = models.BinaryField(default=True)
 # Species Data - In Hindi
 class PlantaeHindi(models.Model):
 	plant = models.ForeignKey(Plantae)

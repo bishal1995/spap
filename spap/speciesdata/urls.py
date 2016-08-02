@@ -4,6 +4,6 @@ import views
 urlpatterns = [
 
 	# All order details	
-    url(r'^dvision/$', views.PlantaeAPI.as_view() ),
+    url(r'^plantae/$', views.PlantaeAPI.as_view() ),
 ]
 

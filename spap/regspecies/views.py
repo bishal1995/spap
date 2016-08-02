@@ -46,15 +46,15 @@ class RegPlantaeAPI(APIView):
 				try:
 					beat = Beat.objects.get(beat=beat_id)
 					regplantae = RegPlantae()
-					regplantae['plantae'] = plantae
-					regplantae['images'] = images
-					regplantae['beat'] = beat
-					regplantae['state'] = regplantae_data['state'] 
-					regplantae['district'] = regplantae_data['district']
-					regplantae['latitude'] = regplantae_data['latitude']
-					regplantae['longitude'] = regplantae_data['longitude']
-					regplantae['data1'] = regplantae_data['data1']
-					regplantae['data2'] = regplantae_data['data2']
+					regplantae.plantae = plantae
+					regplantae.images = images
+					regplantae.beat = beat
+					regplantae.state = regplantae_data['state'] 
+					regplantae.district = regplantae_data['district']
+					regplantae.latitude = float(regplantae_data['latitude'])
+					regplantae.longitude = float(regplantae_data['longitude'])
+					regplantae.data1 = regplantae_data['data1']
+					regplantae.data2 = regplantae_data['data2']
 					regplantae.save()
 					data = {'reg_plantae' : regplantae.regplantae }
 					return Response(data,status=status.HTTP_200_OK)
@@ -71,8 +71,8 @@ class RegPlantaeAPI(APIView):
 
 	def patch(self,request):
 		regplantae_data = request.body
-		regplantae_data = json.loads(regplantae_data['plantae'])
-		regplantae_id = int(regplantae_data[''])
+		regplantae_data = json.loads(regplantae_data)
+		regplantae_id = int(regplantae_data['regplantae'])
 		plantae_id = int(regplantae_data['plantae'])
 		images_id = int(regplantae_data['images'])
 		beat_id = int(regplantae_data['beat'])
@@ -90,8 +90,8 @@ class RegPlantaeAPI(APIView):
 						updateparameters['beat'] = beat
 						updateparameters['state'] = regplantae_data['state']
 						updateparameters['district'] = regplantae_data['district']
-						updateparameters['latitude'] = regplantae_data['latitude']
-						updateparameters['longitude'] = regplantae_data['longitude']
+						updateparameters['latitude'] = float(regplantae_data['latitude'])
+						updateparameters['longitude'] = float(regplantae_data['longitude'])
 						updateparameters['data1'] = regplantae_data['data1']
 						updateparameters['data2'] = regplantae_data['data2']
 						RegPlantae.objects.filter(regplantae=regplantae_id).update(**updateparameters)

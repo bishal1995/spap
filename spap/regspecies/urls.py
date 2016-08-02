@@ -4,7 +4,7 @@ import views
 urlpatterns = [
 
 	# All order details	
-    url(r'^plantae/$', views.RegPlantaeAPI.as_view() ),
+    url(r'^plantaereg/$', views.RegPlantaeAPI.as_view() ),
 
 ]
 

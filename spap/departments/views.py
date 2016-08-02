@@ -43,10 +43,10 @@ class DivisionAPI(APIView):
 		try:
 			gisarea = gisArea.objects.get(gisarea=area_id)
 			division = Division()
-			division['state'] = division_data['state']
-			division['district'] = division_data['district']
-			division['division_name'] = division_data['division']
-			division['gisArea'] = gisarea
+			division.state = division_data['state']
+			division.district = division_data['district']
+			division.division_name = division_data['division_name']
+			division.gisArea = gisarea
 			division.save()
 			data = { 'division_id' : division.division }
 			return Response(data,status=status.HTTP_200_OK)
@@ -68,7 +68,7 @@ class DivisionAPI(APIView):
 				updateparameters = {}
 				updateparameters['state'] = division_data['state']
 				updateparameters['district'] = division_data['district']
-				updateparameters['division_name'] = division_data['division_name']
+				updateparameters['division_name'] = division_data['division']
 				updateparameters['gisArea'] = gisarea
 				Division.objects.filter(division=division_id).update(**updateparameters)
 				data = { 'division_updated' : division_id }
@@ -113,11 +113,11 @@ class RangeAPI(APIView):
 			try:
 				division = Division.objects.get(division=division_id)
 				ranges = Range()
-				ranges['state'] = range_data['state']
-				ranges['district'] = range_data['district']
-				ranges['range_name'] = range_data['range_name']
-				ranges['division'] = division
-				ranges['gisArea'] = gisarea
+				ranges.state = range_data['state']
+				ranges.district = range_data['district']
+				ranges.range_name = range_data['range_name']
+				ranges.division = division
+				ranges.gisArea = gisarea
 				ranges.save()
 				data = { 'range_id' : ranges.ranges }
 				return Response(data,status=status.HTTP_200_OK)
@@ -133,7 +133,7 @@ class RangeAPI(APIView):
 		range_data = request.body
 		range_data = json.loads(range_data)
 		range_id = int(range_data['id'])
-		area_id = int(division_data['gisArea'])
+		area_id = int(range_data['gisArea'])
 		try:
 			ranges = Range.objects.get(ranges=range_id)
 			division_id = int(range_data['division'])
@@ -192,16 +192,16 @@ class BeatAPI(APIView):
 			division_id = int(beat_data['division'])
 			try:
 				division = Division.objects.get(division=division_id)
-				range_is = int(beat_data['ranges'])
+				range_id = int(beat_data['ranges'])
 				try:
 					ranges = Range.objects.get(ranges=range_id)
 					beat = Beat()
-					beat['state'] = beat_data['state']
-					beat['district'] = beat_data['district']
-					beat['beat_name'] = beat_data['range_name']
-					beat['ranges'] = ranges
-					beat['division'] = division
-					beat['gisArea'] = gisarea
+					beat.state = beat_data['state']
+					beat.district = beat_data['district']
+					beat.beat_name = beat_data['beat_name']
+					beat.ranges = ranges
+					beat.division = division
+					beat.gisArea = gisarea
 					beat.save()
 					data = { 'range_id' : beat.beat }
 					return Response(data,status=status.HTTP_200_OK)
@@ -220,10 +220,11 @@ class BeatAPI(APIView):
 		beat_data =request.body
 		beat_data = json.loads(beat_data)
 		area_id = int(beat_data['gisArea'])
-		range_id = int(beat_data['range'])
+		range_id = int(beat_data['ranges'])
+		beat_id  = int(beat_data['id'])
 		division_id = int(beat_data['division'])
 		try:
-			beat = Beat.objects.get(beat=best_id)
+			beat = Beat.objects.get(beat=beat_id)
 			try:
 				ranges = Range.objects.get(ranges=range_id)
 				try:
@@ -237,8 +238,8 @@ class BeatAPI(APIView):
 						updateparameters['ranges'] = ranges
 						updateparameters['division'] = division
 						updateparameters['gisArea'] = gisarea
-						Beat.objects.filter(beat=best_id).update(**updateparameters)
-						data = { 'beat_updated' : best_id }
+						Beat.objects.filter(beat=beat_id).update(**updateparameters)
+						data = { 'beat_updated' : beat_id }
 						return Response(data,status=status.HTTP_200_OK)
 					except gisArea.DoesNotExist :
 						error = {'error':'Invalid gisArea Id'}

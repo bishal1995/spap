@@ -24,6 +24,16 @@ from django.views.generic import RedirectView
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api-token-auth/', views.obtain_auth_token),
+    url(r'^departments/', include('departments.urls')),
+    url(r'^media/', include('media.urls')),
+    url(r'^regspecies/', include('regspecies.urls')),
+    url(r'^speciesdata/', include('speciesdata.urls')),
+
+
+
+
+
+
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

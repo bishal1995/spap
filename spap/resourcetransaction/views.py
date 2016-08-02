@@ -203,37 +203,3 @@ class SeedDistributionAPI(APIView):
 	def dispatch(self, *args, **kwargs):
 		return super(SeedDistributionAPI,self).dispatch(*args, **kwargs)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
