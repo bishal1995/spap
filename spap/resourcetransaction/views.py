@@ -13,8 +13,8 @@ import json,decimal
 
 # Module Models
 from .models import SeedCollection,SeedDistribution,Transaction
-from regspecies import RegPlantae
-from resourcebank import SeedDeposit,ResourceDeposit
+from regspecies.models import RegPlantae
+from resourcebank.models import SeedDeposit,ResourceDeposit
 
 # Collections
 class SeedCollectionAPI(APIView):
@@ -24,7 +24,7 @@ class SeedCollectionAPI(APIView):
 
 # Implement Permission and Id validity later On
 	def put(self,request):
-		collection_data = request.data
+		collection_data = request.body
 		collection_data = json.loads(collection_data)
 		regplantae_id = int(collection_data['plant'])
 		amount = int(collection_data['coll_amount'])
@@ -32,15 +32,16 @@ class SeedCollectionAPI(APIView):
 			regplantae = RegPlantae.objects.get(regplantae=regplantae_id)
 			# Seedcollection 
 			seedcollection = SeedCollection()
-			seedcollection['collfromg'] = collection_data['collfromg']
-			seedcollection['colltog'] = collection_data['colltog']
-			seedcollection['collfromg_id'] = int(collection_data['collfromg_id'])
-			seedcollection['colltog_id'] = int(collection_data['colltog_id'])
-			seedcollection['collfromU'] = collection_data['collfromU']
-			seedcollection['colltoU'] = collection_data['colltoU']
-			seedcollection['collfromU_id'] = int(collection_data['collfromU_id'])
-			seedcollection['colltoU_id'] = int(collection_data['colltoU_id'])
-			seedcollection['coll_amount'] = int(collection_data['coll_amount'])
+			seedcollection.collfromg = collection_data['collfromg']
+			seedcollection.colltog = collection_data['colltog']
+			seedcollection.collfromg_id = int(collection_data['collfromg_id'])
+			seedcollection.colltog_id = int(collection_data['colltog_id'])
+			seedcollection.collfromU = collection_data['collfromU']
+			seedcollection.colltoU = collection_data['colltoU']
+			seedcollection.collfromU_id = int(collection_data['collfromU_id'])
+			seedcollection.colltoU_id = int(collection_data['colltoU_id'])
+			seedcollection.plant = regplantae
+			seedcollection.coll_amount = int(collection_data['coll_amount'])
 			seedcollection.save()
 			# Deduction
 			seeddeposit_from = SeedDeposit.objects.get(
@@ -56,7 +57,7 @@ class SeedCollectionAPI(APIView):
 				body_id = int(collection_data['collfromg_id']),
 				body_type = collection_data['collfromg']
 				)
-			ResourceDeposit.filter(
+			ResourceDeposit.objects.filter(
 				body_id = int(collection_data['collfromg_id']),
 				body_type = collection_data['collfromg']
 				).update(balance = reduced_balance)
@@ -74,11 +75,19 @@ class SeedCollectionAPI(APIView):
 				body_id = int(collection_data['colltog_id']),
 				body_type = collection_data['colltog']
 				)
-			ResourceDeposit.filter(
+			ResourceDeposit.objects.filter(
 				body_id = int(collection_data['colltog_id']),
 				body_type = collection_data['colltog']
 				).update(balance = added_balance)
 			# Transaction finally done
+			tranFrom = ResourceDeposit.objects.get(
+				body_id = int(collection_data['collfromg_id']),
+				body_type = collection_data['collfromg']
+				)
+			tranTo = ResourceDeposit.objects.get(
+				body_id = int(collection_data['colltog_id']),
+				body_type = collection_data['colltog']
+				)
 			Transaction(
 				trantype = 'CO',
 				tran_id = int(seedcollection.seedcollection) ,
@@ -88,14 +97,14 @@ class SeedCollectionAPI(APIView):
 				tranfromg = collection_data['collfromg'] , 
 				trantog = collection_data['colltog'] ,
 				tranfromg_id = int(collection_data['collfromg_id']) , 
-				trantog_id = int(collection_data['colltog_id'])
+				trantog_id = int(collection_data['colltog_id']) ,
 				tranfromU = collection_data['collfromU'] , 
 				trantoU = collection_data['colltoU'] , 
-				tranfromU_id = int(collection_data['collfromU_id']) , 
+				tranfromU_id = int(collection_data['collfromU_id']), 
 				trantoU_id = int(collection_data['colltoU_id']) , 
 				transaction_amount = int(collection_data['coll_amount']),
-				bal_dec_from = int(resource_from.account)
-				bal_add_to = int(resource_to.account)
+				bal_dec_from = tranFrom ,
+				bal_add_to = tranTo
 				).save()
 
 			data = {'seed_collection':seedcollection.seedcollection}
@@ -124,16 +133,17 @@ class SeedDistributionAPI(APIView):
 		amount = int(distribution_data['dis_amount'])
 		try:
 			regplantae = RegPlantae.objects.get(regplantae=regplantae_id)
-			seeddistribution = Seeddistribution()
-			seeddistribution['disfromg'] = distribution_data['disfromg']
-			seeddistribution['distog'] = distribution_data['distog']
-			seeddistribution['disfromg_id'] = distribution_data['disfromg_id']
-			seeddistribution['distog_id'] = distribution_data['distog_id']
-			seeddistribution['disfromU'] = distribution_data['disfromU']
-			seeddistribution['distoU'] = distribution_data['distoU']
-			seeddistribution['disfromU_id'] = distribution_data['disfromU_id']
-			seeddistribution['distoU_id'] = distribution_data['distoU_id']
-			seeddistribution['dis_amount'] = int(distribution_data['dis_amount'])
+			seeddistribution = SeedDistribution()
+			seeddistribution.disfromg = distribution_data['disfromg']
+			seeddistribution.distog = distribution_data['distog']
+			seeddistribution.disfromg_id = int(distribution_data['disfromg_id'])
+			seeddistribution.distog_id = int(distribution_data['distog_id'])
+			seeddistribution.disfromU = distribution_data['disfromU']
+			seeddistribution.distoU = distribution_data['distoU']
+			seeddistribution.disfromU_id = int(distribution_data['disfromU_id'])
+			seeddistribution.distoU_id = int(distribution_data['distoU_id'])
+			seeddistribution.plant = regplantae
+			seeddistribution.dis_amount = int(distribution_data['dis_amount'])
 			seeddistribution.save()
 			# Deduction
 			seeddeposit_from = SeedDeposit.objects.get(
@@ -149,7 +159,7 @@ class SeedDistributionAPI(APIView):
 				body_id = int(distribution_data['disfromg_id']),
 				body_type = distribution_data['disfromg']
 				)
-			ResourceDeposit.filter(
+			ResourceDeposit.objects.filter(
 				body_id = int(distribution_data['disfromg_id']),
 				body_type = distribution_data['disfromg']
 				).update(balance = reduced_balance)
@@ -167,11 +177,19 @@ class SeedDistributionAPI(APIView):
 				body_id = int(distribution_data['distog_id']),
 				body_type = distribution_data['distog']
 				)
-			ResourceDeposit.filter(
+			ResourceDeposit.objects.filter(
 				body_id = int(distribution_data['distog_id']),
 				body_type = distribution_data['distog']
 				).update(balance = added_balance)
 			# Transaction finally done
+			tranFrom = ResourceDeposit.objects.get(
+				body_id = int(distribution_data['disfromg_id']),
+				body_type = distribution_data['disfromg']
+				)
+			tranTo = ResourceDeposit.objects.get(
+				body_id = int(distribution_data['distog_id']),
+				body_type = distribution_data['distog']
+				)
 			Transaction(
 				trantype = 'DS',
 				tran_id = int(seeddistribution.seeddistribution) ,
@@ -181,14 +199,14 @@ class SeedDistributionAPI(APIView):
 				tranfromg = distribution_data['disfromg'] , 
 				trantog = distribution_data['distog'] ,
 				tranfromg_id = int(distribution_data['disfromg_id']) , 
-				trantog_id = int(distribution_data['distog_id'])
+				trantog_id = int(distribution_data['distog_id']) ,
 				tranfromU = distribution_data['disfromU'] , 
 				trantoU = distribution_data['distoU'] , 
 				tranfromU_id = int(distribution_data['disfromU_id']) , 
 				trantoU_id = int(distribution_data['distoU_id']) , 
 				transaction_amount = int(distribution_data['dis_amount']),
-				bal_dec_from = int(resource_from.account)
-				bal_add_to = int(resource_to.account)
+				bal_dec_from = tranFrom ,
+				bal_add_to = tranTo
 				).save()
 
 			data = {'seed_distribution':seeddistribution.seeddistribution}

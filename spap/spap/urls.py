@@ -28,12 +28,7 @@ urlpatterns = [
     url(r'^media/', include('media.urls')),
     url(r'^regspecies/', include('regspecies.urls')),
     url(r'^speciesdata/', include('speciesdata.urls')),
-
-
-
-
-
-
+    url(r'^resourcetransaction/', include('resourcetransaction.urls')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

@@ -53,8 +53,8 @@ class SeedCollection(models.Model):
 	colltoU_id = models.PositiveIntegerField() # User ID
 	plant = models.ForeignKey('regspecies.RegPlantae') # registered plant
 	coll_amount = models.PositiveSmallIntegerField()
-	date = models.DateField(auto_now_add=False)
-	time = models.TimeField(auto_now_add=False)
+	date = models.DateField(auto_now_add=True)
+	time = models.TimeField(auto_now_add=True)
 
 # Seed Distributions
 class SeedDistribution(models.Model):
@@ -69,8 +69,8 @@ class SeedDistribution(models.Model):
 	distoU_id = models.PositiveIntegerField() # User ID
 	plant = models.ForeignKey('regspecies.RegPlantae')    # registered plant
 	dis_amount = models.PositiveSmallIntegerField()
-	date = models.DateField(auto_now_add=False)
-	time = models.TimeField(auto_now_add=False)
+	date = models.DateField(auto_now_add=True)
+	time = models.TimeField(auto_now_add=True)
 
 # Simillarly we can augument the many type of transaction for many type of resources
 
@@ -93,9 +93,8 @@ class Transaction(models.Model):
 	transaction_amount = models.PositiveSmallIntegerField()
 	bal_dec_from = models.ForeignKey('resourcebank.ResourceDeposit',related_name='from+')
 	bal_add_to = models.ForeignKey('resourcebank.ResourceDeposit',related_name='to+')
-	date = models.DateField(auto_now_add=False)
-	time = models.TimeField(auto_now_add=False)
-
+	date = models.DateField(auto_now_add=True)
+	time = models.TimeField(auto_now_add=True)
 
 '''
 Reasons for different collection and distribution tables is viewing permission
