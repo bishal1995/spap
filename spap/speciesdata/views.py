@@ -12,7 +12,7 @@ from django.contrib.auth.models import User
 import json,decimal
 
 # module packages
-from .serializers import PlantaeSerializer,PlantaeHindiSerializer,PlantaeAssameseSerializer,PlantaeBengaliSerializer
+from .serializers import PlantaeSerializer,PlantaeHindiSerializer,PlantaeAssameseSerializer,PlantaeBengaliSerializer,PlantaeListSerializer
 from .models import Plantae,PlantaeHindi,PlantaeAssamese,PlantaeBengali
 
 class PlantaeAPI(APIView):
@@ -70,6 +70,19 @@ class PlantaeAPI(APIView):
 	def dispatch(self, *args, **kwargs):
 		return super(PlantaeAPI,self).dispatch(*args, **kwargs)
 
+class PlantaeListAPI(APIView):
+	authentication_classes = (TokenAuthentication,)
+	permission_classes = (IsAuthenticated,)
+	throttle_classes = (UserRateThrottle,)
+
+	def get(self,request):
+		plantaes = Plantae.objects.all()
+		serializers = PlantaeListSerializer(plantaes,many=True)
+		return Response(serializers.data,status=status.HTTP_200_OK)
+
+	@method_decorator(csrf_exempt)
+	def dispatch(self, *args, **kwargs):
+		return super(PlantaeListAPI,self).dispatch(*args, **kwargs)
 
 
 

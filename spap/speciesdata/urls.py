@@ -5,5 +5,6 @@ urlpatterns = [
 
 	# All order details	
     url(r'^plantae/$', views.PlantaeAPI.as_view() ),
+    url(r'^plantaelist/$', views.PlantaeAPI.as_view() ),
 ]
 

@@ -9,6 +9,8 @@ class Division(models.Model):
 	division_name = models.CharField(max_length=40)
 	gisArea = models.ForeignKey('gisdata.gisArea',null=True)
 	is_active = models.BinaryField(default=True)
+	latitude = models.DecimalField(max_digits=8, decimal_places=6,null=True)
+	longitude = models.DecimalField(max_digits=8, decimal_places=6,null=True)
 
 class Range(models.Model):
 	ranges = models.AutoField(primary_key=True,db_index=True)
@@ -18,6 +20,8 @@ class Range(models.Model):
 	division = models.ForeignKey(Division)
 	gisArea = models.ForeignKey('gisdata.gisArea',null=True)
 	is_active = models.BinaryField(default=True)
+	latitude = models.DecimalField(max_digits=8, decimal_places=6,null=True)
+	longitude = models.DecimalField(max_digits=8, decimal_places=6,null=True)
 
 class Beat(models.Model):
 	beat = models.AutoField(primary_key=True,db_index=True)
@@ -28,5 +32,5 @@ class Beat(models.Model):
 	division = models.ForeignKey(Division)
 	gisArea = models.ForeignKey('gisdata.gisArea',null=True) # from gis data
 	is_active = models.BinaryField(default=True)
-
-	
+	latitude = models.DecimalField(max_digits=8, decimal_places=6,null=True)
+	longitude = models.DecimalField(max_digits=8, decimal_places=6,null=True)

@@ -16,7 +16,7 @@ from .models import RegPlantae
 from speciesdata.models import Plantae
 from media.models import PlantaeImages
 from departments.models import Beat
-from .serializers import RegPlantaeSerializer
+from .serializers import RegPlantaeSerializer,RegPlantaeListSerializer
 
 class RegPlantaeAPI(APIView):
 	authentication_classes = (TokenAuthentication,)
@@ -53,7 +53,7 @@ class RegPlantaeAPI(APIView):
 					regplantae.district = regplantae_data['district']
 					regplantae.latitude = float(regplantae_data['latitude'])
 					regplantae.longitude = float(regplantae_data['longitude'])
-					regplantae.data1 = regplantae_data['data1']
+					regplantae.ptype = regplantae_data['type']
 					regplantae.data2 = regplantae_data['data2']
 					regplantae.save()
 					data = {'reg_plantae' : regplantae.regplantae }
@@ -92,7 +92,7 @@ class RegPlantaeAPI(APIView):
 						updateparameters['district'] = regplantae_data['district']
 						updateparameters['latitude'] = float(regplantae_data['latitude'])
 						updateparameters['longitude'] = float(regplantae_data['longitude'])
-						updateparameters['data1'] = regplantae_data['data1']
+						updateparameters['ptype'] = regplantae_data['type']
 						updateparameters['data2'] = regplantae_data['data2']
 						RegPlantae.objects.filter(regplantae=regplantae_id).update(**updateparameters)
 						data = {'RegSpecies_updates': regplantae_id }
@@ -115,3 +115,16 @@ class RegPlantaeAPI(APIView):
 		return super(RegPlantaeAPI,self).dispatch(*args, **kwargs)
 
 
+class RegPlantaeListAPI(APIView):
+	authentication_classes = (TokenAuthentication,)
+	permission_classes = (IsAuthenticated,)
+	throttle_classes = (UserRateThrottle,)
+
+	def get(self,request):
+		plantaes = RegPlantae.objects.all()
+		serializers = RegPlantaeListSerializer(plantaes,many=True)
+		return Response(serializers.data,status=status.HTTP_200_OK)
+
+	@method_decorator(csrf_exempt)
+	def dispatch(self, *args, **kwargs):
+		return super(RegPlantaeListAPI,self).dispatch(*args, **kwargs)

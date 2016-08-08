@@ -52,7 +52,10 @@ class PlantaeBengaliSerializer(serializers.ModelSerializer):
 		fields = ('plantae','scientific_name','local_name','comments')
 
 
-
+class PlantaeListSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = Plantae
+		fields = ( 'plantae', 'scientific_name', 'local_name',)
 
 
 
