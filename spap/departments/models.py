@@ -1,5 +1,5 @@
 from __future__ import unicode_literals
-from django.db import models
+from django.contrib.gis.db import models
 
 
 class Division(models.Model):
@@ -8,7 +8,6 @@ class Division(models.Model):
 	district = models.CharField(max_length=30)
 	division_name = models.CharField(max_length=40)
 	gisArea = models.ForeignKey('gisdata.gisArea',null=True)
-	is_active = models.BinaryField(default=True)
 	latitude = models.DecimalField(max_digits=8, decimal_places=6,null=True)
 	longitude = models.DecimalField(max_digits=8, decimal_places=6,null=True)
 
@@ -19,7 +18,6 @@ class Range(models.Model):
 	range_name = models.CharField(max_length=30)
 	division = models.ForeignKey(Division)
 	gisArea = models.ForeignKey('gisdata.gisArea',null=True)
-	is_active = models.BinaryField(default=True)
 	latitude = models.DecimalField(max_digits=8, decimal_places=6,null=True)
 	longitude = models.DecimalField(max_digits=8, decimal_places=6,null=True)
 
@@ -31,6 +29,5 @@ class Beat(models.Model):
 	ranges = models.ForeignKey(Range)
 	division = models.ForeignKey(Division)
 	gisArea = models.ForeignKey('gisdata.gisArea',null=True) # from gis data
-	is_active = models.BinaryField(default=True)
 	latitude = models.DecimalField(max_digits=8, decimal_places=6,null=True)
 	longitude = models.DecimalField(max_digits=8, decimal_places=6,null=True)

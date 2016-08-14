@@ -9,7 +9,8 @@ from rest_framework import status
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
-import json,decimal
+from django.contrib.gis.geos import GEOSGeometry,Point,Polygon
+import json,decimal,ast
 
 # Module models
 from .models import RegPlantae
@@ -17,6 +18,7 @@ from speciesdata.models import Plantae
 from media.models import PlantaeImages
 from departments.models import Beat
 from .serializers import RegPlantaeSerializer,RegPlantaeListSerializer
+from gisdata.models import gisArea
 
 class RegPlantaeAPI(APIView):
 	authentication_classes = (TokenAuthentication,)
@@ -35,10 +37,28 @@ class RegPlantaeAPI(APIView):
 
 	def put(self,request):
 		regplantae_data = request.body
+		regplantae_data = regplantae_data.replace('\"','"')
+		regplantae_data = regplantae_data.replace("\n","")
 		regplantae_data = json.loads(regplantae_data)
 		plantae_id = int(regplantae_data['plantae'])
 		images_id = int(regplantae_data['images'])
 		beat_id = int(regplantae_data['beat'])
+		if (regplantae_data['ptype'] == 'IG'):
+			boundry = ast.literal_eval(regplantae_data['patch'])
+			print(type(boundry))
+			if ( len(boundry) != 0 ):
+				clist = []
+				for cordinates in boundry:
+					clist.append(GEOSGeometry('POINT(%s %s)'%(cordinates[0],cordinates[1])))
+				poly = Polygon(clist)
+				area = gisArea()
+				area.areaType = 'IG'
+				area.boundry = poly
+				area.save()
+			else : 
+				area = None			
+		else:
+			area = None
 		try:
 			plantae = Plantae.objects.get(plantae=plantae_id)
 			try:
@@ -53,8 +73,8 @@ class RegPlantaeAPI(APIView):
 					regplantae.district = regplantae_data['district']
 					regplantae.latitude = float(regplantae_data['latitude'])
 					regplantae.longitude = float(regplantae_data['longitude'])
-					regplantae.ptype = regplantae_data['type']
-					regplantae.data2 = regplantae_data['data2']
+					regplantae.ptype = regplantae_data['ptype']
+					regplantae.patch = area
 					regplantae.save()
 					data = {'reg_plantae' : regplantae.regplantae }
 					return Response(data,status=status.HTTP_200_OK)
@@ -76,6 +96,22 @@ class RegPlantaeAPI(APIView):
 		plantae_id = int(regplantae_data['plantae'])
 		images_id = int(regplantae_data['images'])
 		beat_id = int(regplantae_data['beat'])
+		if (regplantae_data['ptype'] == 'IG'):
+			boundry = ast.literal_eval(regplantae_data['patch'])
+			print(type(boundry))
+			if ( len(boundry) != 0 ):
+				clist = []
+				for cordinates in boundry:
+					clist.append(GEOSGeometry('POINT(%s %s)'%(cordinates[0],cordinates[1])))
+				poly = Polygon(clist)
+				area = gisArea()
+				area.areaType = 'IG'
+				area.boundry = poly
+				area.save()
+			else : 
+				area = None			
+		else:
+			area = None
 		try:
 			plantae = Plantae.objects.get(plantae=plantae_id)
 			try:
@@ -92,8 +128,8 @@ class RegPlantaeAPI(APIView):
 						updateparameters['district'] = regplantae_data['district']
 						updateparameters['latitude'] = float(regplantae_data['latitude'])
 						updateparameters['longitude'] = float(regplantae_data['longitude'])
-						updateparameters['ptype'] = regplantae_data['type']
-						updateparameters['data2'] = regplantae_data['data2']
+						updateparameters['ptype'] = regplantae_data['ptype']
+						updateparameters['patch'] = area
 						RegPlantae.objects.filter(regplantae=regplantae_id).update(**updateparameters)
 						data = {'RegSpecies_updates': regplantae_id }
 						return Response(data,status=status.HTTP_200_OK)

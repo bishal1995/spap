@@ -1,5 +1,5 @@
 from __future__ import unicode_literals
-from django.db import models
+from django.contrib.gis.db import models
 # Create your models here.
 
 #Options
@@ -145,7 +145,6 @@ class Plantae(models.Model):
 	seeds_diaspore = models.PositiveSmallIntegerField()
 	seed_size_class = models.PositiveSmallIntegerField()
 	sporophyte_cost = models.CharField(max_length=2,choices=SPC)
-	status = models.BinaryField(default=True)
 # Species Data - In Hindi
 class PlantaeHindi(models.Model):
 	plant = models.ForeignKey(Plantae)

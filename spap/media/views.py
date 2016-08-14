@@ -21,8 +21,6 @@ class ImageUploadAPI(APIView):
 	throttle_classes = (UserRateThrottle,)
 
 	def put(self,request):
-		print(request)
-
 		imgFile = request.FILES['image']
 		plImage = PlantaeImages()
 		plImage.thumbnail = ImageFile(imgFile)

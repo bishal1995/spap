@@ -1,18 +1,17 @@
 from __future__ import unicode_literals
+from django.contrib.gis.db import models
 
-from django.db import models
-
-# Create your models here.
+# AreaType
+ATY = (
+	('BT','Beat'),
+	('RN','Range'),
+	('DI','Division'),
+	('IG','Indegenous Patch'),
+)
 
 class gisArea(models.Model):
 	gisarea = models.AutoField(primary_key=True,db_index=True)
-
-
-class cordinates(models.Model):
-	area = models.OneToOneField(gisArea,primary_key=True,db_index=True)
-	latitude = models.DecimalField(max_digits=8, decimal_places=6)
-	longitude = models.DecimalField(max_digits=8, decimal_places=6)
-
-
+	areaType = models.CharField(max_length=2,choices=ATY,null=True)
+	boundry = models.PolygonField(null=True)
 
 
