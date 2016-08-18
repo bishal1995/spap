@@ -36,10 +36,11 @@ class RegPlantaeAPI(APIView):
 			return Response(error,status=status.HTTP_400_BAD_REQUEST)
 
 	def put(self,request):
-		regplantae_data = request.body
+		regplantae_data = request.body.decode("utf-8")
 		regplantae_data = regplantae_data.replace('\"','"')
 		regplantae_data = regplantae_data.replace("\n","")
 		regplantae_data = json.loads(regplantae_data)
+		
 		plantae_id = int(regplantae_data['plantae'])
 		images_id = int(regplantae_data['images'])
 		beat_id = int(regplantae_data['beat'])

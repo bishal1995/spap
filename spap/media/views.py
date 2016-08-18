@@ -25,6 +25,7 @@ class ImageUploadAPI(APIView):
 		plImage = PlantaeImages()
 		plImage.thumbnail = ImageFile(imgFile)
 		plImage.save()
+		
 		data = {'image_id': plImage.images }
 		return Response(data,status=status.HTTP_200_OK)
 
