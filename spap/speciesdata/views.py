@@ -76,7 +76,8 @@ class PlantaeListAPI(APIView):
 	throttle_classes = (UserRateThrottle,)
 
 	def get(self,request):
-		plantaes = Plantae.objects.all()
+		fromID = int(request.GET['from'])
+		plantaes = Plantae.objects.all()[fromID:10]
 		serializers = PlantaeListSerializer(plantaes,many=True)
 		return Response(serializers.data,status=status.HTTP_200_OK)
 
