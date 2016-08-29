@@ -28,91 +28,147 @@ class SeedCollectionAPI(APIView):
 		collection_data = json.loads(collection_data)
 		regplantae_id = int(collection_data['plant'])
 		amount = int(collection_data['coll_amount'])
-		try:
-			regplantae = RegPlantae.objects.get(regplantae=regplantae_id)
-			# Seedcollection 
-			seedcollection = SeedCollection()
-			seedcollection.collfromg = collection_data['collfromg']
-			seedcollection.colltog = collection_data['colltog']
-			seedcollection.collfromg_id = int(collection_data['collfromg_id'])
-			seedcollection.colltog_id = int(collection_data['colltog_id'])
-			seedcollection.collfromU = collection_data['collfromU']
-			seedcollection.colltoU = collection_data['colltoU']
-			seedcollection.collfromU_id = int(collection_data['collfromU_id'])
-			seedcollection.colltoU_id = int(collection_data['colltoU_id'])
-			seedcollection.plant = regplantae
-			seedcollection.coll_amount = int(collection_data['coll_amount'])
-			seedcollection.save()
-			# Deduction
-			seeddeposit_from = SeedDeposit.objects.get(
-				body_id = int(collection_data['collfromg_id']),
-				body_type = collection_data['collfromg']
-				)
-			reduced_balance = seeddeposit_from.balance - amount
-			SeedDeposit.objects.filter(
-				body_id = int(collection_data['collfromg_id']),
-				body_type = collection_data['collfromg']
-				).update(balance = reduced_balance)
-			resource_from = ResourceDeposit.objects.get(
-				body_id = int(collection_data['collfromg_id']),
-				body_type = collection_data['collfromg']
-				)
-			ResourceDeposit.objects.filter(
-				body_id = int(collection_data['collfromg_id']),
-				body_type = collection_data['collfromg']
-				).update(balance = reduced_balance)
-			# Addition
-			seeddeposit_to = SeedDeposit.objects.get(
-				body_id = int(collection_data['colltog_id']),
-				body_type = collection_data['colltog']
-				)
-			added_balance = seeddeposit_to.balance + amount
-			SeedDeposit.objects.filter(
-				body_id = int(collection_data['colltog_id']),
-				body_type = collection_data['colltog']
-				).update(balance = added_balance)
-			resource_to = ResourceDeposit.objects.get(
-				body_id = int(collection_data['colltog_id']),
-				body_type = collection_data['colltog']
-				)
-			ResourceDeposit.objects.filter(
-				body_id = int(collection_data['colltog_id']),
-				body_type = collection_data['colltog']
-				).update(balance = added_balance)
-			# Transaction finally done
-			tranFrom = ResourceDeposit.objects.get(
-				body_id = int(collection_data['collfromg_id']),
-				body_type = collection_data['collfromg']
-				)
-			tranTo = ResourceDeposit.objects.get(
-				body_id = int(collection_data['colltog_id']),
-				body_type = collection_data['colltog']
-				)
-			Transaction(
-				trantype = 'CO',
-				tran_id = int(seedcollection.seedcollection) ,
-				trangood = 'SD',
-				regbeing_type = 'PL' ,
-				regbeing_id = regplantae_id ,
-				tranfromg = collection_data['collfromg'] , 
-				trantog = collection_data['colltog'] ,
-				tranfromg_id = int(collection_data['collfromg_id']) , 
-				trantog_id = int(collection_data['colltog_id']) ,
-				tranfromU = collection_data['collfromU'] , 
-				trantoU = collection_data['colltoU'] , 
-				tranfromU_id = int(collection_data['collfromU_id']), 
-				trantoU_id = int(collection_data['colltoU_id']) , 
-				transaction_amount = int(collection_data['coll_amount']),
-				bal_dec_from = tranFrom ,
-				bal_add_to = tranTo
-				).save()
+		# Check for seed collection from registered Species
+		if 'collfromg' in collection_data:
+			try:
+				regplantae = RegPlantae.objects.get(regplantae=regplantae_id)
+				# Seedcollection 
+				seedcollection = SeedCollection()
+				seedcollection.collfromg = collection_data['collfromg']
+				seedcollection.colltog = collection_data['colltog']
+				seedcollection.collfromg_id = int(collection_data['collfromg_id'])
+				seedcollection.colltog_id = int(collection_data['colltog_id'])
+				seedcollection.collfromU = collection_data['collfromU']
+				seedcollection.colltoU = collection_data['colltoU']
+				seedcollection.collfromU_id = int(collection_data['collfromU_id'])
+				seedcollection.colltoU_id = int(collection_data['colltoU_id'])
+				seedcollection.plant = regplantae
+				seedcollection.coll_amount = int(collection_data['coll_amount'])
+				seedcollection.save()
+				# Deduction
+				seeddeposit_from = SeedDeposit.objects.get(
+					body_id = int(collection_data['collfromg_id']),
+					body_type = collection_data['collfromg']
+					)
+				reduced_balance = seeddeposit_from.balance - amount
+				SeedDeposit.objects.filter(
+					body_id = int(collection_data['collfromg_id']),
+					body_type = collection_data['collfromg']
+					).update(balance = reduced_balance)
+				resource_from = ResourceDeposit.objects.get(
+					body_id = int(collection_data['collfromg_id']),
+					body_type = collection_data['collfromg']
+					)
+				ResourceDeposit.objects.filter(
+					body_id = int(collection_data['collfromg_id']),
+					body_type = collection_data['collfromg']
+					).update(balance = reduced_balance)
+				# Addition
+				seeddeposit_to = SeedDeposit.objects.get(
+					body_id = int(collection_data['colltog_id']),
+					body_type = collection_data['colltog']
+					)
+				added_balance = seeddeposit_to.balance + amount
+				SeedDeposit.objects.filter(
+					body_id = int(collection_data['colltog_id']),
+					body_type = collection_data['colltog']
+					).update(balance = added_balance)
+				resource_to = ResourceDeposit.objects.get(
+					body_id = int(collection_data['colltog_id']),
+					body_type = collection_data['colltog']
+					)
+				ResourceDeposit.objects.filter(
+					body_id = int(collection_data['colltog_id']),
+					body_type = collection_data['colltog']
+					).update(balance = added_balance)
+				# Transaction finally done
+				tranFrom = ResourceDeposit.objects.get(
+					body_id = int(collection_data['collfromg_id']),
+					body_type = collection_data['collfromg']
+					)
+				tranTo = ResourceDeposit.objects.get(
+					body_id = int(collection_data['colltog_id']),
+					body_type = collection_data['colltog']
+					)
+				Transaction(
+					trantype = 'CO',
+					tran_id = int(seedcollection.seedcollection) ,
+					trangood = 'SD',
+					regbeing_type = 'PL' ,
+					regbeing_id = regplantae_id ,
+					tranfromg = collection_data['collfromg'] , 
+					trantog = collection_data['colltog'] ,
+					tranfromg_id = int(collection_data['collfromg_id']) , 
+					trantog_id = int(collection_data['colltog_id']) ,
+					tranfromU = collection_data['collfromU'] , 
+					trantoU = collection_data['colltoU'] , 
+					tranfromU_id = int(collection_data['collfromU_id']), 
+					trantoU_id = int(collection_data['colltoU_id']) , 
+					transaction_amount = int(collection_data['coll_amount']),
+					bal_dec_from = tranFrom ,
+					bal_add_to = tranTo
+					).save()
 
-			data = {'seed_collection':seedcollection.seedcollection}
-			return Response(data,status=status.HTTP_200_OK)
+				data = {'seed_collection':seedcollection.seedcollection}
+				return Response(data,status=status.HTTP_200_OK)
 
-		except RegPlantae.DoesNotExist:
-			error = {'error' : 'Invalid registered platae ID'}
-			return Response(error,status=status.HTTP_400_BAD_REQUEST)
+			except RegPlantae.DoesNotExist:
+				error = {'error' : 'Invalid registered platae ID'}
+				return Response(error,status=status.HTTP_400_BAD_REQUEST)
+		else:
+			try:
+				regplantae = RegPlantae.objects.get(regplantae=regplantae_id)
+				# Seedcollection 
+				seedcollection = SeedCollection()
+				seedcollection.colltog_id = int(collection_data['colltog_id'])
+				seedcollection.colltoU_id = int(collection_data['colltoU_id'])
+				seedcollection.plant = regplantae
+				seedcollection.coll_amount = int(collection_data['coll_amount'])
+				seedcollection.save()
+				# Addition
+				seeddeposit_to = SeedDeposit.objects.get(
+					body_id = int(collection_data['colltog_id']),
+					body_type = 'BT'
+					)
+				added_balance = seeddeposit_to.balance + amount
+				SeedDeposit.objects.filter(
+					body_id = int(collection_data['colltog_id']),
+					body_type = 'BT'
+					).update(balance = added_balance)
+				resource_to = ResourceDeposit.objects.get(
+					body_id = int(collection_data['colltog_id']),
+					body_type = 'BT'
+					)
+				ResourceDeposit.objects.filter(
+					body_id = int(collection_data['colltog_id']),
+					body_type = 'BT'
+					).update(balance = added_balance)
+
+				Transaction(
+					trantype = 'SC',
+					tran_id = int(seedcollection.seedcollection) ,
+					trangood = 'SD',
+					regbeing_type = 'PL' ,
+					regbeing_id = regplantae_id ,
+					tranfromg = 'BC' , 
+					trantog = 'BT' ,
+					tranfromg_id = 0 , 
+					trantog_id = int(collection_data['colltog_id']) ,
+					tranfromU = 'RS' , 
+					trantoU = 'BO' , 
+					tranfromU_id = 0 , 
+					trantoU_id = int(collection_data['colltoU_id']) , 
+					transaction_amount = int(collection_data['coll_amount']),
+					bal_dec_from = tranFrom ,
+					bal_add_to = tranTo
+					).save()
+
+				data = {'seed_collection':seedcollection.seedcollection}
+				return Response(data,status=status.HTTP_200_OK)
+
+			except RegPlantae.DoesNotExist:
+				error = {'error' : 'Invalid registered platae ID'}
+				return Response(error,status=status.HTTP_400_BAD_REQUEST)
 
 	@method_decorator(csrf_exempt)
 	def dispatch(self, *args, **kwargs):
