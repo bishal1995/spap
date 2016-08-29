@@ -6,30 +6,36 @@ from django.contrib.gis.db import models
 TRT = (
 	('CO','Collection'),
 	('DS','Distribution'),
+	('SC','Species_Collection'),
+	('GC','Distributed_body'),
 )
 #2) Transaction from group- can augument later if needed
 TFB = (
 	('DI','Division'),
 	('RN','Range'),
 	('BT','Beat'),
+	('BC','Beat_collection'),
 )
 #3) Transaction to group- can augument later if needed
 TTB = (
 	('DI','Division'),
 	('RN','Range'),
 	('BT','Beat'),
+	('DD','Division_distribution'),
 )
 #4) Transaction from officer Type- can augument later if needed
 TRO = (
 	('DO','Division officer'),
 	('RO','Range officer'),
 	('BO','Beat officer'),
+	('RS','RegSpecies'),
 )
 #5) Transaction to officer Type - can augument later if needed
 TTO = (
 	('DO','Division officer'),
 	('RO','Range officer'),
 	('BO','Beat officer'),
+	('CC','Government_customer'),
 )
 #6) Transaction goods - can augument later if needed
 TRG = (
@@ -43,13 +49,13 @@ RBT = (
 # Seed collections
 class SeedCollection(models.Model):
 	seedcollection = models.AutoField(primary_key=True,db_index=True)
-	collfromg = models.CharField(max_length=2,choices=TFB) # group type
-	colltog = models.CharField(max_length=2,choices=TTB) # group type
-	collfromg_id = models.PositiveIntegerField() # group ID
+	collfromg = models.CharField(max_length=2,choices=TFB,default='BC') # group type
+	colltog = models.CharField(max_length=2,choices=TTB,default='BT') # group type
+	collfromg_id = models.PositiveIntegerField(default=0) # group ID
 	colltog_id = models.PositiveIntegerField() # group ID
-	collfromU = models.CharField(max_length=2,choices=TRO) # User type
-	colltoU = models.CharField(max_length=2,choices=TTO) # User type
-	collfromU_id = models.PositiveIntegerField() # User ID
+	collfromU = models.CharField(max_length=2,choices=TRO,default='RS') # User type
+	colltoU = models.CharField(max_length=2,choices=TTO,default='BO') # User type
+	collfromU_id = models.PositiveIntegerField(default=0) # User ID
 	colltoU_id = models.PositiveIntegerField() # User ID
 	plant = models.ForeignKey('regspecies.RegPlantae') # registered plant
 	coll_amount = models.PositiveSmallIntegerField()
@@ -100,68 +106,3 @@ class Transaction(models.Model):
 Reasons for different collection and distribution tables is viewing permission
 
 '''
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
