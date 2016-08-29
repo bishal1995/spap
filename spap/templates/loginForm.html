@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block head_title %} Toddler | login {% endblock %}
+
+{% block content %}
+
+	<div class="col-sm-3 col-sm-offset-4">
+		<form method="POST" action=" " enctype="multipart/form-data">{% csrf_token %}
+		{{ form|crispy }}
+		<input class="btn btn-primary btn-block btn-flat" type="submit" value="Log In">
+		</form>
+		<p style="text-align:center">Developed By</p> 
+		NIT Silchar
+
+	</div>
+{% endblock %}

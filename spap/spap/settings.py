@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    #django apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -38,18 +39,23 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.gis',
+    #third party apps
+    'crispy_forms',
+    'corsheaders',
     'rest_framework',
     'rest_framework.authtoken',
-    'corsheaders',
+    #my apps
     'datafiles.apps.DatafilesConfig',
     'departments.apps.DepartmentsConfig',
     'gisdata.apps.GisdataConfig',
+    'interface',
     'media.apps.MediaConfig',
     'regspecies.apps.RegspeciesConfig',
     'resourcebank.apps.ResourcebankConfig',
     'resourcetransaction.apps.ResourcetransactionConfig',
     'speciesdata.apps.SpeciesdataConfig',
     'users.apps.UsersConfig',
+    
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -67,7 +73,7 @@ ROOT_URLCONF = 'spap.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, "templates")],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -87,6 +93,19 @@ WSGI_APPLICATION = 'spap.wsgi.application'
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
 
+
+'''DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'spap1',
+        'USER' : 'dbuser',
+        'PASSWORD' : '8269',
+        'HOST' : 'localhost',
+        'PORT': '', 
+    }
+}'''
+
+
 DATABASES = {
     'default': {
 
@@ -95,13 +114,13 @@ DATABASES = {
         # # The following settings are not used with sqlite3:
         # 'USER': 'superfrms',
         # 'PASSWORD': 'test32',
-        'NAME' : 'spap1',
-        'USER' : 'dbuser',
+        'NAME' : 'test',
+        'USER' : 'zyloc',
         'PASSWORD' : '8269',
         'HOST': 'localhost',                      # Empty for localhost through domain sockets or           '127.0.0.1' for localhost through TCP.
         'PORT': '',                      # Set to empty string for default.
     }
-}
+} 
 
 REST_FRAMEWORK = {
     'DEFAULT_THROTTLE_RATES': {
@@ -143,6 +162,10 @@ USE_L10N = True
 
 USE_TZ = True
 
+#crispy form
+
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
+
 # Media files
 #media
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -154,3 +177,8 @@ MEDIA_URL = '/media/'
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
+STATIC_ROOT = os.path.join(BASE_DIR, 'static_cdn')
+

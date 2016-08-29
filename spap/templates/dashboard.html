@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% block title %} Dashboard {% endblock%}
+{% block main_content %}
+    <!-- Main content -->
+    <section class="content">
+      <!-- Info boxes -->
+      <div class="row">
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box">
+            <span class="info-box-icon bg-yellow"><i class="ion ion-ios-people-outline"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text"> Active Users </span>
+              <span class="info-box-number">2,000</span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box">
+            <span class="info-box-icon bg-yellow"><i class="ion ion-ios-people-outline"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Inactive Users</span>
+              <span class="info-box-number">2,000</span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+
+        <!-- fix for small devices only -->
+        <div class="clearfix visible-sm-block"></div>
+
+        <!-- /.col -->
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+      <!-- /.row -->
+
+      <!-- Main row -->
+      <div class="row">
+        <!-- Left col -->
+        <div class="col-md-8">
+          <!-- MAP & BOX PANE -->
+          <div class="box box-success">
+            <div class="box-header with-border">
+              <h3 class="box-title">CACHAR MAP</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body no-padding">
+              <div id="world-map-markers" style="height: 325px; margin-left: 20px; margin-right: 20px;"></div>
+              <!-- /.row -->
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+          <!-- /.box -->
+        </div>
+        <!-- /.col -->
+
+
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </section>
+
+{% endblock %}    
+
+{% block page_js %}
+  <script>
+      var map;
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('world-map-markers'), {
+          center: {lat: 24.8333, lng: 92.7789},
+          zoom: 8
+        });
+      }
+    </script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAteM4P82ZpVfZHUA-greFhVVphVI9UcI0&callback=initMap"
+    async defer></script>
+{% endblock %}
