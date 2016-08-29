@@ -94,7 +94,7 @@ WSGI_APPLICATION = 'spap.wsgi.application'
 
 
 
-'''DATABASES = {
+DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'spap1',
@@ -103,10 +103,10 @@ WSGI_APPLICATION = 'spap.wsgi.application'
         'HOST' : 'localhost',
         'PORT': '', 
     }
-}'''
+}
 
 
-DATABASES = {
+'''DATABASES = {
     'default': {
 
         'ENGINE': 'django.contrib.gis.db.backends.postgis', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
@@ -120,7 +120,7 @@ DATABASES = {
         'HOST': 'localhost',                      # Empty for localhost through domain sockets or           '127.0.0.1' for localhost through TCP.
         'PORT': '',                      # Set to empty string for default.
     }
-} 
+} '''
 
 REST_FRAMEWORK = {
     'DEFAULT_THROTTLE_RATES': {
