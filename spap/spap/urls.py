@@ -26,7 +26,7 @@ urlpatterns = [
     url(r'^', include("interface.urls",namespace="interface")),
     url(r'^admin/', admin.site.urls),
     url(r'^api-token-auth/', views.obtain_auth_token),
-    url(r'^user/', include('users.urls')),
+    url(r'^users/', include('users.urls')),
     url(r'^departments/', include('departments.urls')),
     url(r'^media/', include('media.urls')),
     url(r'^regspecies/', include('regspecies.urls')),

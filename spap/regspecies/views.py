@@ -5,7 +5,6 @@ from rest_framework.views import APIView
 from rest_framework.throttling import UserRateThrottle
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
-from rest_framework.authtoken.models import Token
 from rest_framework import status
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
@@ -28,21 +27,6 @@ class RegPlantaeAPI(APIView):
 	throttle_classes = (UserRateThrottle,)
 
 	def get(self,request):
-		# Update Last Activity
-
-		AuthToken = request.META['HTTP_AUTHORIZATION']
-		AuthToken = AuthToken.replace('Token ','')
-		user = Token.objects.get(key=AuthToken).user
-		try:
-			appuser = LastActivity.objects.get(user=user)
-			lastactivity = LastActivity.objects.get(user=user)
-			lastactivity.save()
-			
-		except LastActivity.DoesNotExist :
-			LastActivity(
-				user = user
-			).save()
-
 		regplantae_id = int(request.GET['id'])
 		try:
 			regPlantae = RegPlantae.objects.get(regplantae=regplantae_id)
@@ -53,19 +37,6 @@ class RegPlantaeAPI(APIView):
 			return Response(error,status=status.HTTP_400_BAD_REQUEST)
 
 	def put(self,request):
-		# Update Last Activity
-		AuthToken = request.META['AUTHORIZATION']
-		AuthToken = AuthToken.replace('Token ','')
-		user = Token.objects.get(key=AuthToken).user
-		try:
-			appuser = LastActivity.objects.get(user=user)
-			LastActivity.objects.filter(user=user).update(activity='PR')
-
-		except LastActivity.DoesNotExist :
-			LastActivity(
-				user = user,
-				activity = 'PR'
-			).save()
 		# Extracting species registration data
 		regplantae_data = request.body.decode("utf-8")
 		regplantae_data = regplantae_data.replace('\"','"')

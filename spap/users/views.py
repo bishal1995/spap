@@ -28,11 +28,11 @@ class OfficerInfo(APIView):
 			user_details['off_id'] = user.officialID
 			user_details['first_name'] = request.user.first_name
 			user_details['last_name'] = request.user.last_name
-			user_details['division_id'] = user.division
+			user_details['division_id'] = user.division.pk
 			user_details['division'] = user.division.division_name
-			user_details['range_id'] = user.ranged
+			user_details['range_id'] = user.ranged.pk
 			user_details['range'] = user.ranged.range_name
-			user_details['beat_id'] = user.beat
+			user_details['beat_id'] = user.beat.pk
 			user_details['beat'] = user.beat.beat_name
 			found = True
 			return Response(user_details,status=status.HTTP_200_OK)
@@ -48,9 +48,9 @@ class OfficerInfo(APIView):
 			user_details['off_id'] = user.officialID
 			user_details['first_name'] = request.user.first_name
 			user_details['last_name'] = request.user.last_name
-			user_details['division_id'] = user.division
+			user_details['division_id'] = user.division.pk
 			user_details['division'] = user.division.division_name
-			user_details['range_id'] = user.ranged
+			user_details['range_id'] = user.ranged.pk
 			user_details['range'] = user.ranged.range_name
 			found = True
 			return Response(user_details,status=status.HTTP_200_OK)
@@ -66,7 +66,7 @@ class OfficerInfo(APIView):
 			user_details['off_id'] = user.officialID
 			user_details['first_name'] = request.user.first_name
 			user_details['last_name'] = request.user.last_name
-			user_details['division_id'] = user.division
+			user_details['division_id'] = user.division.pk
 			user_details['division'] = user.division.division_name
 			found = True
 			return Response(user_details,status=status.HTTP_200_OK)
