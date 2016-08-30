@@ -90,9 +90,25 @@ WSGI_APPLICATION = 'spap.wsgi.application'
 
 
 # Database
-# https://docs.djangoproject.com/en/1.9/ref/settings/#databases
+
+# Un comment You configuration when using in you system, and comment all other configuration
 
 
+# Toddler database configuration
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'NAME' : 'frmsProd',
+        'USER': 'superfrms',
+        'PASSWORD': 'test32',
+        'HOST': 'localhost',                      # Empty for localhost through domain sockets or           '127.0.0.1' for localhost through TCP.
+        'PORT': '',   
+    }
+}
+
+'''
+# Yogi Database configuration
 
 DATABASES = {
     'default': {
@@ -104,9 +120,12 @@ DATABASES = {
         'PORT': '', 
     }
 }
+'''
 
+'''
+# Zyloc Database Configuration
 
-'''DATABASES = {
+DATABASES = {
     'default': {
 
         'ENGINE': 'django.contrib.gis.db.backends.postgis', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
@@ -154,7 +173,9 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Kolkata'
+
+
 
 USE_I18N = True
 

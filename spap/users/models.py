@@ -24,10 +24,14 @@ class BeatOfficer(models.Model):
 	ranged = models.ForeignKey('departments.Range')
 	beat = models.ForeignKey('departments.Beat')
 
-class LoginInfo(models.Model):
+class LastActivity(models.Model):
 	user = models.OneToOneField(User)
-	last_activity = models.DateTimeField(auto_now=False, auto_now_add=False)
-	activity = models.CharField(max_length=2)
+	last_activity = models.DateTimeField(auto_now=True, auto_now_add=False)
+
+	def __unicode__(self):
+		return self.user.username
+
+
 
 '''
 Simillarly we can have various officials at various levels inheritting the properties
