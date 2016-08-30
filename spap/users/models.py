@@ -27,6 +27,7 @@ class BeatOfficer(models.Model):
 class LoginInfo(models.Model):
 	user = models.OneToOneField(User)
 	last_activity = models.DateTimeField(auto_now=False, auto_now_add=False)
+	activity = models.CharField(max_length=2)
 
 '''
 Simillarly we can have various officials at various levels inheritting the properties
