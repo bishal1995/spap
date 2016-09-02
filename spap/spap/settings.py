@@ -96,7 +96,7 @@ WSGI_APPLICATION = 'spap.wsgi.application'
 
 
 # Toddler database configuration
-
+'''
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
@@ -107,7 +107,7 @@ DATABASES = {
         'PORT': '',   
     }
 }
-
+'''
 '''
 # Yogi Database configuration
 
@@ -123,7 +123,7 @@ DATABASES = {
 }
 '''
 
-'''
+
 # Zyloc Database Configuration
 
 DATABASES = {
@@ -140,7 +140,7 @@ DATABASES = {
         'HOST': 'localhost',                      # Empty for localhost through domain sockets or           '127.0.0.1' for localhost through TCP.
         'PORT': '',                      # Set to empty string for default.
     }
-} '''
+} 
 
 REST_FRAMEWORK = {
     'DEFAULT_THROTTLE_RATES': {
@@ -203,4 +203,8 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'static_cdn')
+
+SMS_URL = "http://message.bizgrow.in/app/smsapi/index.php"
+SMS_KEY = "54abc98a9428a"
+SMS_SENDER = "NITSMS"
 

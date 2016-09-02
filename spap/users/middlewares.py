@@ -5,7 +5,6 @@ from users.models import LastActivity
 # Update last activity for API calls via APP
 class UpdateLastActivityMiddleWare(object):
 	def process_request(self,request):
-		print "It came here"
 		if 'HTTP_AUTHORIZATION' in request.META:
 			AuthToken = request.META['HTTP_AUTHORIZATION']
 			AuthToken = AuthToken.replace('Token ','')

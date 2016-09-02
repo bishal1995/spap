@@ -28,7 +28,7 @@ class SeedDeposit(models.Model):
 	open_time = models.TimeField(auto_now_add=True)
 	last_updated_date = models.DateField(auto_now=True)
 	last_updated_time = models.TimeField(auto_now=True)
-	status = models.BinaryField(default=True) # reveals is it operatable or not
+	#status = models.BinaryField(default=True) # reveals is it operatable or not
 
 
 class ResourceDeposit(models.Model):

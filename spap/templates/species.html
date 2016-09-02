@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block main_content %}
+<section class="content">
+   <div class="row">
+      <div class="col-xs-12">
+         <div class="box">
+            <div class="box-header">
+               <h3 class="box-title">{{ table_heading }} <small>In last 24 hours</small></h3>
+              <a href="{% url 'interface:downloadCsvFile' %}" target="_blank"><div class="btn btn-success" style="float:right;margin-right:2%;"> Download</div></a>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+               <table id="example1" class="table table-bordered table-striped">
+                  <thead>
+                     <tr>
+                        <th>State</th>
+                        <th>Account</th>
+                        <th>Body Id</th>
+                        <th>Balance</th>
+                        <th>Last Updated</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     {% for obj in object_list %}
+                     <tr>
+                        <td>{{ obj.state }}</td>
+                        <td>{{ obj.account }}</td>
+                        <td>{{ obj.body_id }}</td>
+                        <td> {{ obj.balance }}</td>
+                        <td> {{ obj.last_updated_date }}</td>
+                     </tr>
+                     {% endfor %} 
+                  </tbody>
+               </table>
+               <div class="col-sm-5" style="margin-top:30px">
+                  <span class="current">
+                  Showing Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                  </span>
+               </div>
+               <div class="col-sm-7">
+                  <div class="dataTables_paginate paging_simple_numbers">
+                     <ul class="pagination" style="float:right;">
+                        {% if page_obj.has_previous %}
+                        <li class="paginate_button previous" id="example1_previous">
+                           <a href="?page={{ page_obj.previous_page_number }}" aria-controls="example1" data-dt-idx="0" tabindex="0">Previous</a>
+                        </li>
+                        {% else %}
+                        <li class="paginate_button previous disabled" id="example1_previous">
+                           <a href="#" aria-controls="example1" data-dt-idx="0" tabindex="0">Previous</a>
+                        </li>
+                        {% endif %}
+                        {% if page_obj.has_next %}
+                        <li class="paginate_button next" id="example1_next">
+                           <a href="?page={{ page_obj.next_page_number }}" aria-controls="example1" data-dt-idx="1" tabindex="0">Next</a>
+                        </li>
+                        {% else %}
+                        <li class="paginate_button next disabled" id="example1_next">
+                           <a href="#" aria-controls="example1" data-dt-idx="1" tabindex="0">Next</a>
+                        </li>
+                        {% endif %}
+                     </ul>
+                  </div>
+               </div>
+         
+            </div>
+            <!-- /.box-body -->
+         </div>
+      </div>
+   </div>
+</section>
+{% endblock%}

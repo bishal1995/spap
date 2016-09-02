@@ -5,31 +5,34 @@
     <section class="content">
       <!-- Info boxes -->
       <div class="row">
+        <a href="{% url 'interface:useractivity' activity='active' %}">
         <div class="col-md-3 col-sm-6 col-xs-12">
           <div class="info-box">
-            <span class="info-box-icon bg-yellow"><i class="ion ion-ios-people-outline"></i></span>
+            <span class="info-box-icon bg-green"><i class="ion-android-happy"></i></span>
 
             <div class="info-box-content">
               <span class="info-box-text"> Active Users </span>
-              <span class="info-box-number">2,000</span>
+              <span class="info-box-number">{{ total_active_users }}</span>
             </div>
             <!-- /.info-box-content -->
           </div>
           <!-- /.info-box -->
-        </div>
+        </div> </a>
+
         <!-- /.col -->
+        <a href="{% url 'interface:useractivity' activity='inactive' %}">
         <div class="col-md-3 col-sm-6 col-xs-12">
           <div class="info-box">
-            <span class="info-box-icon bg-yellow"><i class="ion ion-ios-people-outline"></i></span>
+            <span class="info-box-icon bg-red"><i class="ion-android-sad"></i></span>
 
             <div class="info-box-content">
               <span class="info-box-text">Inactive Users</span>
-              <span class="info-box-number">2,000</span>
+              <span class="info-box-number">{{ total_inactive_users }}</span>
             </div>
             <!-- /.info-box-content -->
           </div>
           <!-- /.info-box -->
-        </div>
+        </div> </a>
         <!-- /.col -->
 
         <!-- fix for small devices only -->

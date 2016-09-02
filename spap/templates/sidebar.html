@@ -16,7 +16,7 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu">
         <li class="header">MAIN NAVIGATION</li>
-        <li class="active treeview">
+        <li class="treeview">
           <a href="#">
             <i class="fa fa-dashboard"></i> <span>Registered Species</span>
             <span class="pull-right-container">
@@ -24,9 +24,9 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="index.html"><i class="fa fa-circle-o"></i> Range</a></li>
-            <li class="active"><a href="index2.html"><i class="fa fa-circle-o"></i> Beat </a></li>
-            <li class="active"><a href="index2.html"><i class="fa fa-circle-o"></i> Division </a></li>
+            <li><a href="{% url 'interface:species' bodytype='range' %}"><i class="fa fa-circle-o"></i> Range</a></li>
+            <li class="active"><a href="{% url 'interface:species' bodytype='beat' %}"><i class="fa fa-circle-o"></i> Beat </a></li>
+            <li class="active"><a href="{% url 'interface:species' bodytype='division'%}"><i class="fa fa-circle-o"></i> Division </a></li>
           </ul>
         </li>
       </ul>
