@@ -1,5 +1,5 @@
 from django.conf.urls import url,include
-from .views import UserFormView,DashboardView,LogOut,UserActivity,SpeciesInfo,DownloadCsvFile,SendNotification
+from .views import UserFormView,DashboardView,LogOut,UserActivity,SpeciesInfo,DownloadCsvFile,SendNotification,RegisteredPlants
 
 urlpatterns = [
     url(r'^$',UserFormView.as_view(),name="login"),
@@ -9,4 +9,5 @@ urlpatterns = [
     url(r'^dashboard/species/(?P<bodytype>[\w-]+)/$',SpeciesInfo.as_view(),name="species"),
     url(r'^dashboard/downloadCsvFile$',DownloadCsvFile.as_view(),name="downloadCsvFile"),
     url(r'^dashboard/sendnotification$',SendNotification.as_view(),name="sendNotification"),
+    url(r'^dashboard/registeredplants$',RegisteredPlants.as_view(),name="registeredPlants"),
 ]

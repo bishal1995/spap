@@ -22,6 +22,8 @@ class RegPlantae(models.Model):
 	longitude = models.DecimalField(max_digits=9, decimal_places=2)
 	ptype = models.CharField(max_length=2,choices=TY,null=True)
 	patch = models.ForeignKey(gisArea,null=True)
+	def __unicode__(self):
+		return self.plantae.scientific_name
 
 '''
 Simillarly we can have tables for different Kingdom(Taxonomy)

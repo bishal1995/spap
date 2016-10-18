@@ -7,10 +7,12 @@ from django.contrib.auth.models import User
 from django.shortcuts import render,redirect
 from django.views import View
 from django.views.generic.list import ListView
+#imports from apps
 from .forms import UserForm
-from users.models import LastActivity
-from resourcebank.models import SeedDeposit
 from .sendMessage import sendMessage
+from regspecies.models import RegPlantae
+from resourcebank.models import SeedDeposit
+from users.models import LastActivity
 
 class UserFormView(View):
 	form_class= UserForm
@@ -103,7 +105,17 @@ class SpeciesInfo(ListView):
 			queryset = SeedDeposit.objects.filter(body_type="DI")
 		else:
 			queryset = SeedDeposit.objects.filter(body_type="BT")		
-		return queryset	
+		return queryset
+
+class RegisteredPlants(ListView):
+	template_name = "registeredPlants.html"
+	model = RegPlantae
+	context_object_name = "object_list"
+	paginate_by = 2
+	def get_queryset(self):
+		queryset = RegPlantae.objects.all()
+		return queryset
+
 
 class DownloadCsvFile(View):	
 	def get(self,request):

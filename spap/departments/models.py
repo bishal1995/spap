@@ -31,4 +31,5 @@ class Beat(models.Model):
     gisArea = models.ForeignKey('gisdata.gisArea',null=True) # from gis data
     latitude = models.DecimalField(max_digits=8, decimal_places=6,null=True)
     longitude = models.DecimalField(max_digits=8, decimal_places=6,null=True)
-
+    def __unicode__(self):
+        return str(self.beat)

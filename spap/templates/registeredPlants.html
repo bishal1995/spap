@@ -13,21 +13,27 @@
                <table id="example1" class="table table-bordered table-striped">
                   <thead>
                      <tr>
+                        <th>Plant Name</th>
+                        <th>Beat ID</th>
                         <th>State</th>
-                        <th>Account</th>
-                        <th>Body Id</th>
-                        <th>Balance</th>
-                        <th>Last Updated</th>
+                        <th>District</th>
+                        <th>Plant Type</th>
                      </tr>
                   </thead>
                   <tbody>
                      {% for obj in object_list %}
                      <tr>
+                        <td>{{ obj.plantae.scientific_name }}</td>
+                        <td>{{ obj.beat }}</td>
                         <td>{{ obj.state }}</td>
-                        <td>{{ obj.account }}</td>
-                        <td>{{ obj.body_id }}</td>
-                        <td> {{ obj.balance }}</td>
-                        <td> {{ obj.last_updated_date }}</td>
+                        <td> {{ obj.district }}</td>
+                        {% if obj.ptype == "SB" %}
+                           <td> Seed Bearing </td>
+                        {% elif obj.ptype == "IT" %}
+                           <td> Ingeneous Tree </td>
+                        {% else %}
+                           <td> Indegenous Patch </td>
+                        {% endif %}
                      </tr>
                      {% endfor %} 
                   </tbody>
