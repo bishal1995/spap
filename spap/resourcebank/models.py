@@ -1,4 +1,5 @@
 from __future__ import unicode_literals
+from speciesdata.models import Plantae
 from django.contrib.gis.db import models
 
 # Create your models here.
@@ -23,6 +24,7 @@ class SeedDeposit(models.Model):
 	district = models.CharField(max_length=30)
 	body_type = models.CharField(max_length=2,choices=DBT) # Owner type
 	body_id = models.PositiveIntegerField()				   # Owner ID
+	source_species = models.ForeignKey(Plantae,null=True)
 	balance = models.PositiveIntegerField()
 	open_date = models.DateField(auto_now_add=True)
 	open_time = models.TimeField(auto_now_add=True)
@@ -39,6 +41,7 @@ class ResourceDeposit(models.Model):
 	body_id = models.PositiveIntegerField()				   # Owner ID
 	resource_type = models.CharField(max_length=2,choices=RST)
 	resource_bank_id = models.PositiveIntegerField()
+	source_species = models.ForeignKey(Plantae,null=True)
 	balance = models.DecimalField(max_digits=9, decimal_places=2)
 	open_date = models.DateField(auto_now_add=True)
 	open_time = models.TimeField(auto_now_add=True)

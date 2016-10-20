@@ -96,7 +96,7 @@ WSGI_APPLICATION = 'spap.wsgi.application'
 
 
 # Toddler database configuration
-'''
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
@@ -107,7 +107,7 @@ DATABASES = {
         'PORT': '',   
     }
 }
-'''
+
 '''
 # Yogi Database configuration
 
@@ -121,7 +121,7 @@ DATABASES = {
         'PORT': '', 
     }
 }
-'''
+
 
 
 # Zyloc Database Configuration
@@ -141,6 +141,7 @@ DATABASES = {
         'PORT': '',                      # Set to empty string for default.
     }
 } 
+'''
 
 REST_FRAMEWORK = {
     'DEFAULT_THROTTLE_RATES': {
