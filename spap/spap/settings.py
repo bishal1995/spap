@@ -100,8 +100,8 @@ WSGI_APPLICATION = 'spap.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME' : 'frmsProd',
-        'USER': 'superfrms',
+        'NAME' : 'frmsdev',
+        'USER': 'superfrms32',
         'PASSWORD': 'test32',
         'HOST': 'localhost',                      # Empty for localhost through domain sockets or           '127.0.0.1' for localhost through TCP.
         'PORT': '',   
