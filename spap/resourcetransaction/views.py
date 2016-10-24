@@ -87,7 +87,7 @@ class SeedCollectionAPI(APIView):
 					)
 				ResourceDeposit.objects.filter(
 					body_id = int(collection_data['colltog_id']),
-					body_type = collection_data['colltog'].
+					body_type = collection_data['colltog'],
 					source_species = int(regplantae.plantae.pk)
 					).update(balance = added_balance)
 				# Transaction finally done
