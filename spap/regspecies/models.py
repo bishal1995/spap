@@ -21,7 +21,7 @@ class RegPlantae(models.Model):
 	latitude = models.DecimalField(max_digits=9, decimal_places=2)
 	longitude = models.DecimalField(max_digits=9, decimal_places=2)
 	ptype = models.CharField(max_length=2,choices=TY,null=True)
-	patch = models.ForeignKey(gisArea,null=True)
+	patch = models.ForeignKey(gisArea,null=True,blank=True)
 	def __unicode__(self):
 		return self.plantae.scientific_name
 

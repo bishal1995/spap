@@ -96,7 +96,7 @@ WSGI_APPLICATION = 'spap.wsgi.application'
 
 
 # Toddler database configuration
-
+'''
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
@@ -108,7 +108,7 @@ DATABASES = {
     }
 }
 
-'''
+
 # Yogi Database configuration
 
 DATABASES = {
@@ -122,7 +122,7 @@ DATABASES = {
     }
 }
 
-
+'''
 
 # Zyloc Database Configuration
 
@@ -134,14 +134,13 @@ DATABASES = {
         # # The following settings are not used with sqlite3:
         # 'USER': 'superfrms',
         # 'PASSWORD': 'test32',
-        'NAME' : 'test',
-        'USER' : 'zyloc',
+        'NAME' : 'testdb',
+        'USER' : 'testuser',
         'PASSWORD' : '8269',
         'HOST': 'localhost',                      # Empty for localhost through domain sockets or           '127.0.0.1' for localhost through TCP.
         'PORT': '',                      # Set to empty string for default.
     }
 } 
-'''
 
 REST_FRAMEWORK = {
     'DEFAULT_THROTTLE_RATES': {

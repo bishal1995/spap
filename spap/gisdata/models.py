@@ -13,5 +13,6 @@ class gisArea(models.Model):
 	gisarea = models.AutoField(primary_key=True,db_index=True)
 	areaType = models.CharField(max_length=2,choices=ATY,null=True)
 	boundry = models.PolygonField(null=True)
-
+	def __unicode__(self):
+		return str(self.gisarea)
 

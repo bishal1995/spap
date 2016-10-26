@@ -29,7 +29,8 @@ class SeedDeposit(models.Model):
 	last_updated_date = models.DateField(auto_now=True)
 	last_updated_time = models.TimeField(auto_now=True)
 	#status = models.BinaryField(default=True) # reveals is it operatable or not
-
+	def __unicode__(self):
+		return str(self.body_id)
 
 class ResourceDeposit(models.Model):
 	account = models.AutoField(primary_key=True,db_index=True)

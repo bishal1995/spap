@@ -10,6 +10,8 @@ class Division(models.Model):
     gisArea = models.ForeignKey('gisdata.gisArea',null=True)
     latitude = models.DecimalField(max_digits=8, decimal_places=6,null=True)
     longitude = models.DecimalField(max_digits=8, decimal_places=6,null=True)
+    def __unicode__(self):
+        return str(str(self.division)+" "+self.division_name)
 
 class Range(models.Model):
     ranges = models.AutoField(primary_key=True,db_index=True)
@@ -20,7 +22,9 @@ class Range(models.Model):
     gisArea = models.ForeignKey('gisdata.gisArea',null=True)
     latitude = models.DecimalField(max_digits=8, decimal_places=6,null=True)
     longitude = models.DecimalField(max_digits=8, decimal_places=6,null=True)
-
+    def __unicode__(self):
+        return str(str(self.ranges)+" "+self.range_name)
+ 
 class Beat(models.Model):
     beat = models.AutoField(primary_key=True,db_index=True)
     state = models.CharField(max_length=30)
@@ -32,4 +36,4 @@ class Beat(models.Model):
     latitude = models.DecimalField(max_digits=8, decimal_places=6,null=True)
     longitude = models.DecimalField(max_digits=8, decimal_places=6,null=True)
     def __unicode__(self):
-        return str(self.beat)
+        return str(str(self.beat)+' '+self.beat_name)    

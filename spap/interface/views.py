@@ -10,6 +10,7 @@ from django.views.generic.list import ListView
 #imports from apps
 from .forms import UserForm
 from .sendMessage import sendMessage
+from departments.models import Beat,Range,Division
 from regspecies.models import RegPlantae
 from resourcebank.models import SeedDeposit
 from users.models import LastActivity
@@ -98,24 +99,120 @@ class SpeciesInfo(ListView):
 	context_object_name = "object_list"
 	paginate_by = 1
 	def get_queryset(self):
-		#print self.kwargs['bodytype']
 		if self.kwargs['bodytype']=="range":
-			queryset = SeedDeposit.objects.filter(body_type="RN")
+			body_id = int(self.kwargs['bodyId'])
+			if body_id=="":
+				body_id = 1
+			queryset = SeedDeposit.objects.filter(body_type="RN",body_id=body_id)
 		elif self.kwargs['bodytype']=="division":
-			queryset = SeedDeposit.objects.filter(body_type="DI")
+			body_id = self.kwargs['bodyId']
+			if body_id=="":
+				body_id = 1
+			queryset = SeedDeposit.objects.filter(body_type="DI",body_id=body_id)
 		else:
-			queryset = SeedDeposit.objects.filter(body_type="BT")		
+			body_id = self.kwargs['bodyId']
+			if body_id=="":
+				body_id = 1	
+			queryset = SeedDeposit.objects.filter(body_type="BT",body_id=body_id)
 		return queryset
+	def get_context_data(self,**kwargs):
+		context = super(SpeciesInfo, self).get_context_data(**kwargs)
+		body_type = self.kwargs['bodytype']
+		if body_type == "beat":	
+			idList = Beat.objects.all()
+		elif body_type == "range":
+			idList = Range.objects.all()
+		else:
+			idList = Division.objects.all()		
+		context.update({
+			'idList':idList,
+			'queryset' : self.queryset,
+			'department' : 'Beat Id'
+			})
+		#print beatIdList
+		return context	
 
-class RegisteredPlants(ListView):
+class BeatInfo(ListView):
 	template_name = "registeredPlants.html"
 	model = RegPlantae
 	context_object_name = "object_list"
 	paginate_by = 2
+	queryset = {}
 	def get_queryset(self):
-		queryset = RegPlantae.objects.all()
-		return queryset
+		plantType = self.kwargs['plantType']
+		beatId = self.kwargs['beatId']
+		if beatId=="":
+			beatId = 1
+		if plantType =="":
+			plantType = "SB"
+		self.queryset = RegPlantae.objects.filter(beat_id=beatId,ptype=plantType)			
+		return self.queryset
+	
+	def get_context_data(self,**kwargs):
+		context = super(BeatInfo, self).get_context_data(**kwargs)
+		beatIdList = Beat.objects.all()
+		context.update({
+			'idList': beatIdList,
+			'queryset' : self.queryset,
+			'department' : 'Beat Id'
+			})
+		#print beatIdList
+		return context
 
+class RangeInfo(ListView):
+	template_name = "registeredPlants.html"
+	model = RegPlantae
+	context_object_name = "object_list"
+	paginate_by = 2
+	queryset = {}
+	def get_queryset(self):
+		plantType = self.kwargs['plantType']
+		rangeId = self.kwargs['rangeId']
+		if rangeId=="":
+			rangeId = 1
+		if plantType =="":
+			plantType = "SB"
+		beatIds = Beat.objects.filter(ranges_id=rangeId)
+		self.queryset = RegPlantae.objects.filter(beat__in=beatIds)
+		return self.queryset
+	
+	def get_context_data(self,**kwargs):
+		context = super(RangeInfo, self).get_context_data(**kwargs)
+		rangeIdList = Range.objects.all()
+		context.update({
+			'idList': rangeIdList,
+			'queryset' : self.queryset,
+			'department' : 'Range Id'
+			})
+		return context
+
+
+class DivisionInfo(ListView):
+	template_name = "registeredPlants.html"
+	model = RegPlantae
+	context_object_name = "object_list"
+	paginate_by = 2
+	queryset = {}
+	def get_queryset(self):
+		plantType = self.kwargs['plantType']
+		divisionId = self.kwargs['divisionId']
+		if divisionId=="":
+			divisionId = 1
+		if plantType =="":
+			plantType = "SB"
+		beatIds = Beat.objects.filter(division_id=divisionId)
+		self.queryset = RegPlantae.objects.filter(beat__in=beatIds)
+		return self.queryset
+	
+	def get_context_data(self,**kwargs):
+		context = super(DivisionInfo, self).get_context_data(**kwargs)
+		divisionIdList = Division.objects.all()
+		context.update({
+			'idList': divisionIdList,
+			'queryset' : self.queryset,
+			'department' : 'Division Id'
+			})
+		return context
 
 class DownloadCsvFile(View):	
 	def get(self,request):

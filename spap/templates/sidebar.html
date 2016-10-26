@@ -24,18 +24,41 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="{% url 'interface:species' bodytype='range' %}"><i class="fa fa-circle-o"></i> Range</a></li>
-            <li class="active"><a href="{% url 'interface:species' bodytype='beat' %}"><i class="fa fa-circle-o"></i> Beat </a></li>
-            <li class="active"><a href="{% url 'interface:species' bodytype='division'%}"><i class="fa fa-circle-o"></i> Division </a></li>
+            <li><a href="{% url 'interface:species' bodytype='range' bodyId='1'%}"><i class="fa fa-circle-o"></i> Range</a></li>
+            <li><a href="{% url 'interface:species' bodytype='beat' bodyId='1' %}"><i class="fa fa-circle-o"></i> Beat </a></li>
+            <li class="active"><a href="{% url 'interface:species' bodytype='division' bodyId='1'%}"><i class="fa fa-circle-o"></i> Division </a></li>
           </ul>
         </li>
         <li class="treeview">
-          <a href="{% url 'interface:registeredPlants' %}">
-            <i class="fa fa-dashboard"></i> <span>Registered Plants</span>
+          <a href="#">
+            <i class="fa fa-share"></i> <span>Forests</span>
             <span class="pull-right-container">
-              <i class="fa fa-a ngle-left pull-right"></i>
+              <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
+          <ul class="treeview-menu">
+            <li>
+              <a href="{% url 'interface:divisionInfo' divisionId='1' plantType='SB'%}"><i class="fa fa-circle-o"></i> Division
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+            </li>
+            <li>
+              <a href="{% url 'interface:rangeInfo' rangeId='1' plantType='SB'%}"><i class="fa fa-circle-o"></i> Range
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+            </li>
+            <li>
+              <a href="{% url 'interface:beatInfo' beatId='1' plantType='SB'%}"><i class="fa fa-circle-o"></i> Beat
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+            </li>
+          </ul>
         </li>
       </ul>
     </section>

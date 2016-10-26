@@ -2,43 +2,68 @@
 {% load staticfiles %}
 {% block main_content %}
 <section class="content">
-   <div class="row">
-      <div class="col-xs-12">
-         <div class="box">
-            <div class="box-header">
-               <a href="{% url 'interface:downloadCsvFile' %}" target="_blank"><div class="btn btn-success" style="float:right;margin-right:2%;"> Download</div></a>
+<div class="box">
+    <div class="box-header">
+        <h3 class="box-title">Region wise registered plant data</h3>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+        <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+            <div class="row">
+               <div class="col-sm-3">
+                  <div class="dataTables_length" id="example1_length">
+                     <label>
+                        {{ department }} 
+                        <select name="example1_length" aria-controls="example1" class="form-control input-sm">
+                           {% for list in idList %}
+                                       <option value="{{ list.pk }}"> {{ list }}</option>
+                           {% endfor%}
+                        </select>
+                     </label>
+                  </div>
+               </div>
+               <div class="col-sm-3">
+                  <div class="dataTables_length" id="example1_length">
+                     <label>
+                        <select name="example1_length" aria-controls="example1" class="form-control input-sm">
+                                <option value="SB">Seed Bearing</option>
+                                <option value="25">Indegenous Tree</option>
+                                <option value="50">Ingeneous Patch</option>
+                        </select>
+                     </label>
+                  </div>
+               </div>
             </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-               <table id="example1" class="table table-bordered table-striped">
-                  <thead>
-                     <tr>
-                        <th>Plant Name</th>
-                        <th>Beat ID</th>
-                        <th>State</th>
-                        <th>District</th>
-                        <th>Plant Type</th>
-                     </tr>
-                  </thead>
-                  <tbody>
-                     {% for obj in object_list %}
-                     <tr>
-                        <td>{{ obj.plantae.scientific_name }}</td>
-                        <td>{{ obj.beat }}</td>
-                        <td>{{ obj.state }}</td>
-                        <td> {{ obj.district }}</td>
-                        {% if obj.ptype == "SB" %}
-                           <td> Seed Bearing </td>
-                        {% elif obj.ptype == "IT" %}
-                           <td> Ingeneous Tree </td>
-                        {% else %}
-                           <td> Indegenous Patch </td>
-                        {% endif %}
-                     </tr>
-                     {% endfor %} 
-                  </tbody>
-               </table>
-               <div class="col-sm-5" style="margin-top:30px">
+            <div class="row">
+                <div class="col-sm-12">
+                    <table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+                        <thead>
+                            <tr role="row">
+                                <th class="sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending" style="width: 181px;">Species Scientifc Name</th>
+                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 224px;">State</th>
+                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" style="width: 198px;">District</th>
+                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending" style="width: 155px;">Latitude</th>
+                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 112px;">Longitude</th>
+                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 112px;">Patch</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                           {% for obj in queryset %}
+                                 <tr role="row" class="odd">
+                                 <td>{{ obj.plantae.scientific_name }}</td>
+                                 <td>{{ obj.state }}</td>
+                                 <td> {{ obj.district }}</td>
+                                 <td> {{ obj.latitude }}</td>
+                                 <td> {{ obj.longitude }}</td>
+                                 <td> {{ obj.patch }}</td>
+                                 </tr>
+                                 {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-5" style="margin-top:30px">
                   <span class="current">
                   Showing Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
                   </span>
@@ -67,11 +92,9 @@
                      </ul>
                   </div>
                </div>
-         
             </div>
-            <!-- /.box-body -->
-         </div>
-      </div>
-   </div>
+        </div>
+    </div>
+</div>
 </section>
 {% endblock%}

@@ -145,6 +145,9 @@ class Plantae(models.Model):
 	seeds_diaspore = models.PositiveSmallIntegerField()
 	seed_size_class = models.PositiveSmallIntegerField()
 	sporophyte_cost = models.CharField(max_length=2,choices=SPC)
+	
+	def __unicode__(self):
+		return self.scientific_name
 # Species Data - In Hindi
 class PlantaeHindi(models.Model):
 	plant = models.ForeignKey(Plantae)
