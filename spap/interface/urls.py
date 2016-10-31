@@ -12,4 +12,5 @@ urlpatterns = [
     url(r'^dashboard/forest/beat/(?P<beatId>[\d-]+)/(?P<plantType>[\w-]+)/$',BeatInfo.as_view(),name="beatInfo"),
     url(r'^dashboard/forest/range/(?P<rangeId>[\d-]+)/(?P<plantType>[\w-]+)/$',RangeInfo.as_view(),name="rangeInfo"),
     url(r'^dashboard/forest/division/(?P<divisionId>[\d-]+)/(?P<plantType>[\w-]+)/$',DivisionInfo.as_view(),name="divisionInfo"),
+    url(r'^dashboard/forest/detail/(?P<plantId>[\d]+)/$',DetailInfoPlants.as_view(),name="detailInfoPlants"),
 ]

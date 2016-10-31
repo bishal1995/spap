@@ -6,6 +6,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.models import User
 from django.shortcuts import render,redirect
 from django.views import View
+from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 #imports from apps
 from .forms import UserForm
@@ -230,3 +231,13 @@ class LogOut(View):
 	def get(self,request):
 		logout(request)
 		return redirect("interface:login")		
+
+class DetailInfoPlants(View):
+	template_name = "detailViewOfPlant.html"
+	context_object_name = "object_list"
+	def get(self,request,plantId=1):
+		obj = RegPlantae.objects.get(regplantae=plantId)
+		context = {
+			'obj': obj
+		}
+		return render(request,self.template_name,context)
